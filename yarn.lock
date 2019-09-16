@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@rails/webpacker@3.5":
-  version "3.5.5"
-  resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-3.5.5.tgz#8911c66bcefc8bc6b91270e92f0d39e3c2d43116"
-  integrity sha512-R9kglLb/R9mMqf2BW91XJHYc0q00qAO67vfrbV52ifTSywPOixEka/7oU3cb6671u1ajd74kuGAsCSnBtdVHJg==
+"@rails/webpacker@^3.5":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-3.6.0.tgz#89f50421934a40cad7193cd62756a18fa5027251"
+  integrity sha512-QlEPgdi++lBjc2rGp2s3hhT9vbhskeMSpHWOxVnpoMjIspTvjSyRWBV8t15d9M4cy5W5Zxlt87aVce7gVI4lFA==
   dependencies:
     babel-core "^6.26.3"
     babel-loader "^7.1.5"
@@ -5905,7 +5905,7 @@ prepend-http@^1.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
   integrity sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
 
-prettier@^1.7.0:
+prettier@^1.16.0:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
   integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
@@ -7431,10 +7431,10 @@ vue-hot-reload-api@^2.2.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
-vue-loader@14.2.2:
-  version "14.2.2"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-14.2.2.tgz#c8cf3c2e29b6fb2ee595248a2aa6005038a125b3"
-  integrity sha512-SehrPGsxSssZXQoR7DTAm2oMBiJxV+xTIX5BUxc+qFsNo0iIj01tzAMXWt0PD5hjoNCXdS5Bq1KLRy7WaMdkKg==
+vue-loader@^14.2.2:
+  version "14.2.4"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-14.2.4.tgz#d0a0e8236155fa7f9602cde65b0d38259e051ee2"
+  integrity sha512-bub2/rcTMJ3etEbbeehdH2Em3G2F5vZIjMK7ZUePj5UtgmZSTtOX1xVVawDpDsy021s3vQpO6VpWJ3z3nO8dDw==
   dependencies:
     consolidate "^0.14.0"
     hash-sum "^1.0.2"
@@ -7443,7 +7443,7 @@ vue-loader@14.2.2:
     postcss "^6.0.8"
     postcss-load-config "^1.1.0"
     postcss-selector-parser "^2.0.0"
-    prettier "^1.7.0"
+    prettier "^1.16.0"
     resolve "^1.4.0"
     source-map "^0.6.1"
     vue-hot-reload-api "^2.2.0"
