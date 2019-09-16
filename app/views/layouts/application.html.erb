@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html class="h-100">
+  <head>
+    <title>VueSampleApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <%= javascript_pack_tag 'application' %>
+    <%= stylesheet_pack_tag 'vue_sample_app' %>
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <header>
+      <%= render partial: "common/navbar" %>
+    </header>
+    <main class="mt-5" role="main">
+      <div class="container">
+        <%= yield %>
+      </div>
+    </main>
+    <footer class="bg-light mt-auto py-3">
+      <div class="container">
+        <span class="text-muted"></span>
+      </div>
+    </footer>
+  </body>
+</html>
