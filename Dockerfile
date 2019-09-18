@@ -29,4 +29,4 @@ COPY --from=bundler --chown=circleci:circleci /usr/local/bundle /usr/local/bundl
 COPY --from=bundler --chown=circleci:circleci /home/circleci/app/node_modules /home/circleci/app/node_modules
 COPY --chown=circleci:circleci . /home/circleci/app
 
-CMD SECRET_KEY_BASE=$(rails secret) rails webpacker:compile assets:precompile server
+CMD export SECRET_KEY_BASE=$(rails secret); rails webpacker:compile assets:precompile && rails server -b 0.0.0.0
