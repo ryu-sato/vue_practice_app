@@ -22,4 +22,9 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  host: <%= ENV['VUE_PRACTICE_DATABASE_HOST'] || 'localhost' %>
+  port: <%= ENV['VUE_PRACTICE_DATABASE_PORT'] || 5432 %>
+  database: <%= ENV['VUE_PRACTICE_DATABASE_DBNAME'] || 'vue_practice_production' %>
+  username: <%= ENV['VUE_PRACTICE_DATABASE_USERNAME'] %>
+  password: <%= ENV['VUE_PRACTICE_DATABASE_PASSWORD'] %>
