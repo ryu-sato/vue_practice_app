@@ -1,12 +1,12 @@
-# How to install
+# How to deploy
 
-1. Install namespaces (see: namespaces.yml)
-1. Install middlewares
+1. Deploy namespaces (see: namespaces.yml)
+1. Deploy middlewares
     * postgresql (see: helm/postgresql/values.yml)
-1. Install secrets
+1. Deploy secrets
     * for vue-practice (see: secret/vue-practice.yml)
-1. Install applications
+1. Deploy applications
     * vue-practice (see: vue-practice/deployment.yml)
-1. Install networks settings
-    * service (see: vue-practice/service.yml)
+1. Deploy networks settings
+    * for vue-practice (see: vue-practice/service.yml)
     * ingress (see: ingress/vue-practice.yml)
