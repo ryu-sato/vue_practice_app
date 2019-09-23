@@ -2,9 +2,9 @@
   "name": "vue-sample-app",
   "private": true,
   "engines": {
-    "node": ">= 8.14.0 <9",
+    "node": ">= 10.15.3 <11",
     "npm": ">= 6.4.1 <7",
-    "yarn": ">= 1.12.3 <2"
+    "yarn": ">= 1.13.0 <2"
   },
   "dependencies": {
     "@rails/webpacker": "^3.5",
