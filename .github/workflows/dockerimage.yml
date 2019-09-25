@@ -12,12 +12,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v1
-    - name: Build the Docker image
+    container:
       env:
         # [TODO] ${{ github.repository }} から repository 名だけ抽出する
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
       run: docker build . --file Dockerfile --tag $IMAGE_NAME
 
     - name: Login to Docker hub
