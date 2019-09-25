@@ -24,4 +24,4 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
 
     - name: Push the Docker image to Docker hub
-      run: docker push --tag $IMAGE_NAME
+      run: docker push $IMAGE_NAME
