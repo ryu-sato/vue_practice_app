@@ -17,15 +17,15 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
-    # - name: migrate on cluster
-    #   uses: steebchen/kubectl@master
-    #   env:
-    #     KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-    #     # [TODO] ${{ github.repository }} から repository 名だけ抽出する
-    #     IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
-    #     K8S_DEPLOYMENT_NAME: vue-practice
-    #   with:
-    #     args: run tmp-migrate -it --generator=run-pod/v1 --rm --image ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }} '-- bin/rails db:migrate'
+    - name: migrate on cluster
+      uses: steebchen/kubectl@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        # [TODO] ${{ github.repository }} から repository 名だけ抽出する
+        IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+        K8S_DEPLOYMENT_NAME: vue-practice
+      with:
+        args: run tmp-migrate -it --generator=run-pod/v1 --rm --image $IMAGE_NAME -- bin/rails db:migrate
 
     - name: deploy to cluster
       uses: steebchen/kubectl@master
@@ -36,7 +36,7 @@ jobs:
         K8S_NAMESPACE: vue-practice
         K8S_DEPLOYMENT_NAME: vue-practice
       with:
-        args: set image --namespace vue-practice --record deployment/vue-practice container=${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+        args: set image --namespace $K8S_NAMESPACE --record deployment/$K8S_DEPLOYMENT_NAME container=$IMAGE_NAME
 
     - name: verify deployment
       uses: steebchen/kubectl@master
