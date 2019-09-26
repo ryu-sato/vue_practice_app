@@ -25,7 +25,7 @@ jobs:
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
         K8S_DEPLOYMENT_NAME: vue-practice
       with:
-        args: '"run tmp-migrate -it --generator=run-pod/v1 --rm --image $IMAGE_NAME -- bin/rails db:migrate"'
+        args: run tmp-migrate -it --generator=run-pod/v1 --rm --image ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }} -- bin/rails db:migrate
 
     - name: deploy to cluster
       uses: steebchen/kubectl@master
