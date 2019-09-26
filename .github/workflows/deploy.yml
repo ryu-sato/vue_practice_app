@@ -36,7 +36,7 @@ jobs:
         K8S_NAMESPACE: vue-practice
         K8S_DEPLOYMENT_NAME: vue-practice
       with:
-        args: set image --namespace $K8S_NAMESPACE --record deployment/$K8S_DEPLOYMENT_NAME container=$IMAGE_NAME
+        args: set image --namespace vue-practice --record deployment/vue-practice container=${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
 
     - name: verify deployment
       uses: steebchen/kubectl@master
