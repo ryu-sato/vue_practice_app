@@ -22,7 +22,8 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         # [TODO] ${{ github.repository }} から repository 名だけ抽出する
-        IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+        # IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+        IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
         K8S_DEPLOYMENT_NAME: vue-practice
       with:
         args: run tmp-migrate -it --generator=run-pod/v1 --rm --image $IMAGE_NAME -- bin/rails db:migrate
@@ -32,7 +33,8 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         # [TODO] ${{ github.repository }} から repository 名だけ抽出する
-        IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+        # IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+        IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
         K8S_NAMESPACE: vue-practice
         K8S_DEPLOYMENT_NAME: vue-practice
       with:
