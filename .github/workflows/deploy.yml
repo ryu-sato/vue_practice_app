@@ -26,7 +26,7 @@ jobs:
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
         K8S_DEPLOYMENT_NAME: vue-practice
       with:
-        args: run tmp-migrate -it --generator=run-pod/v1 --rm --image $IMAGE_NAME -- bin/rails db:migrate
+        args: run tmp-migrate -i --generator=run-pod/v1 --rm --image $IMAGE_NAME -- SECRET_KEY_BASE=$(rails secret) rails db:migrate || exit 1
 
     - name: deploy to cluster
       uses: steebchen/kubectl@master
@@ -37,8 +37,9 @@ jobs:
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
         K8S_NAMESPACE: vue-practice
         K8S_DEPLOYMENT_NAME: vue-practice
+        K8S_CONTAINER_NAME: app
       with:
-        args: set image --namespace $K8S_NAMESPACE --record deployment/$K8S_DEPLOYMENT_NAME container=$IMAGE_NAME
+        args: set image --namespace $K8S_NAMESPACE --record deployment/$K8S_DEPLOYMENT_NAME container=$K8S_CONTAINER_NAME
 
     - name: verify deployment
       uses: steebchen/kubectl@master
