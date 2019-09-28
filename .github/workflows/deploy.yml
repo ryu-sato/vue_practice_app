@@ -17,19 +17,7 @@ jobs:
     steps:
     - name: test
       env:
-        OVERRIDE_YAML:
-          spec:
-            containers:
-              - name: app
-                image: $IMAGE_NAME
-                command:
-                  - bash
-                args:
-                  - -c
-                  - rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1
-                envFrom:
-                  - secretRef:
-                      name: vue-practice
+        OVERRIDE_YAML: hoge
         OVERRIDE_OPTION: ${{ tojson(steps) }}
       run: echo $OVERRIDE_OPTION
 
