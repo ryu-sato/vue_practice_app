@@ -18,14 +18,14 @@ jobs:
     - name: test
       env:
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
-        OVERRIDE_OPTION: '{"spec": {"containers": [{"name": "app","image": "$IMAGE_NAME","command": ["bash"],"args": ["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1"],"envFrom": [{"secretRef": {"name": "vue-practice"}}]}]}}'
+        OVERRIDE_OPTION: "{\"spec\": {\"containers\": [{\"name\": \"app\",\"image\": \"$IMAGE_NAME\",\"command\": [\"bash\"],\"args\": [\"-c\",\"rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1\"],\"envFrom\": [{\"secretRef\": {\"name\": \"vue-practice\"}}]}]}}"
       run: echo $OVERRIDE_OPTION
 
     - name: test2
       env:
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
-        OVERRIDE_OPTION: "{\"spec\": {\"containers\": [{\"name\": \"app\",\"image\": \"$IMAGE_NAME\",\"command\": [\"bash\"],\"args\": [\"-c\",\"rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1\"],\"envFrom\": [{\"secretRef\": {\"name\": \"vue-practice\"}}]}]}}"
-      run: echo \"$OVERRIDE_OPTION\"
+        OVERRIDE_OPTION: "{\"spec\": {\"containers\": [{\"name\": \"app\",\"image\": \"${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289\",\"command\": [\"bash\"],\"args\": [\"-c\",\"rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1\"],\"envFrom\": [{\"secretRef\": {\"name\": \"vue-practice\"}}]}]}}"
+      run: echo \'$OVERRIDE_OPTION\'
 
     - uses: actions/checkout@master
 
@@ -37,9 +37,9 @@ jobs:
         # IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
         K8S_DEPLOYMENT_NAME: vue-practice
-        OVERRIDE_OPTION: '{"spec": {"containers": [{"name": "app","image": "$IMAGE_NAME","command": ["bash"],"args": ["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1"],"envFrom": [{"secretRef": {"name": "vue-practice"}}]}]}}'
+        OVERRIDE_OPTION: "{\"spec\": {\"containers\": [{\"name\": \"app\",\"image\": \"${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289\",\"command\": [\"bash\"],\"args\": [\"-c\",\"rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1\"],\"envFrom\": [{\"secretRef\": {\"name\": \"vue-practice\"}}]}]}}"
       with:
-        args: run tmp-migrate -i --generator=run-pod/v1 --rm --image $IMAGE_NAME --overrides=$OVERRIDE_OPTION
+        args: run tmp-migrate -i --generator=run-pod/v1 --rm --image $IMAGE_NAME --overrides=\'$OVERRIDE_OPTION\'
 
     - name: deploy to cluster
       uses: steebchen/kubectl@master
