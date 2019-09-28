@@ -17,27 +17,13 @@ jobs:
     steps:
     - name: test
       env:
-        OVERRIDE_YAML: hoge
-        OVERRIDE_OPTION: ${{ tojson(steps) }}
+        OVERRIDE_OPTION: {"spec": {"containers": [{"name": "app","image": "$IMAGE_NAME","command": ["bash"],"args": ["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1"],"envFrom": [{"secretRef": {"name": "vue-practice"}}]}]}}
       run: echo $OVERRIDE_OPTION
 
-    - name: test
+    - name: test2
       env:
-        OVERRIDE_YAML:
-          spec:
-            containers:
-              - name: app
-                image: $IMAGE_NAME
-                command:
-                  - bash
-                args:
-                  - -c
-                  - rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1
-                envFrom:
-                  - secretRef:
-                      name: vue-practice
-        OVERRIDE_OPTION: ${{ tojson(steps.name['migrate on cluster'].env.OVERRIDE_YAML) }}
-      run: echo $OVERRIDE_OPTION
+        OVERRIDE_OPTION: {"spec": {"containers": [{"name": "app","image": "$IMAGE_NAME","command": ["bash"],"args": ["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1"],"envFrom": [{"secretRef": {"name": "vue-practice"}}]}]}}
+      run: echo \"$OVERRIDE_OPTION\"
 
     - uses: actions/checkout@master
 
@@ -49,20 +35,7 @@ jobs:
         # IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
         K8S_DEPLOYMENT_NAME: vue-practice
-        OVERRIDE_YAML:
-          spec:
-            containers:
-              - name: app
-                image: $IMAGE_NAME
-                command:
-                  - bash
-                args:
-                  - -c
-                  - rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1
-                envFrom:
-                  - secretRef:
-                      name: vue-practice
-        OVERRIDE_OPTION: ${{ tojson(steps.name['migrate on cluster'].env.OVERRIDE_YAML) }}
+        OVERRIDE_OPTION: {"spec": {"containers": [{"name": "app","image": "$IMAGE_NAME","command": ["bash"],"args": ["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret) || exit 1"],"envFrom": [{"secretRef": {"name": "vue-practice"}}]}]}}
       with:
         args: run tmp-migrate -i --generator=run-pod/v1 --rm --image $IMAGE_NAME --overrides=$OVERRIDE_OPTION
 
