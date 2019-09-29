@@ -18,9 +18,9 @@ jobs:
         DISABLE_SPRING: 1
       run: |
         # install tools
-        curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-        sudo apt-get install -y nodejs
-        sudo npm install yarn@1.13.0
+        curl -sL https://deb.nodesource.com/setup_10.x | bash -
+        apt-get install -y nodejs
+        npm install yarn@1.13.0
         gem install bundler -v 1.17.3
         # initialize DB
         bundle install
