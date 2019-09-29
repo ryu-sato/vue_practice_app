@@ -20,9 +20,15 @@ jobs:
         RAILS_ENV: test
         DISABLE_SPRING: 1
       run: |
+        echo ls -alR
         ls -alR
+        echo id
+        id
+        echo env
         env
+        echo bundle install
         bundle install
+        echo bundle exec rails db:migrate
         bundle exec rails db:migrate
 
     - name: Test
