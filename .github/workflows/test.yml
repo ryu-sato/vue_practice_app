@@ -7,10 +7,6 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
-    container:
-      image: circleci/ruby:2.5.3-node-browsers
-      volumes:
-        - $GITHUB_WORKSPACE:$GITHUB_WORKSPACE
 
     steps:
     - uses: actions/checkout@v1
@@ -19,25 +15,15 @@ jobs:
       env:
         RAILS_ENV: test
         DISABLE_SPRING: 1
-        UID: 1001
-        GID: 115
       run: |
-        echo ls -alR
-        ls -alR
-        echo id
-        id
-        echo env
-        env
-        echo groupadd -g $GID runner
-        groupadd -g $GID runner
-        echo useradd runner -u $UID -g runner
-        useradd runner -u $UID -g runner
-        echo bash -c -u runner id
-        bash -c -u runner id
-        echo bash -c -u runner bundle install
-        bash -c -u runner bundle install
-        echo bash -c -u runner bundle exec rails db:migrate
-        bash -c -u runner bundle exec rails db:migrate
+        # install tools
+        curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+        sudo apt-get install -y nodejs
+        sudo npm install yarn@1.13.0
+        sudo gem install bundler -v 1.17.3
+        # initialize DB
+        bundle install
+        bundle exec rails db:migrate
 
     - name: Test
       run: bundle exec rails test
