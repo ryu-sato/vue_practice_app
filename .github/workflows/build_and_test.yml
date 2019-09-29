@@ -1,10 +1,10 @@
-name: Build and test
+name: Test
 
 on: push
 
 jobs:
 
-  build:
+  test:
 
     runs-on: ubuntu-latest
     container: circleci/ruby:2.5.3-node-browsers
@@ -15,6 +15,7 @@ jobs:
     - name: Initialize
       env:
         USER: circleci
+        HOME: /home/circleci
         RAILS_ENV: test
       run: |
         bundle install
