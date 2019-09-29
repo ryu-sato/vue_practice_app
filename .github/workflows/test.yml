@@ -28,10 +28,16 @@ jobs:
         id
         echo env
         env
-        echo bundle install
-        bundle install
-        echo bundle exec rails db:migrate
-        bundle exec rails db:migrate
+        echo groupadd -g GID runner
+        groupadd -g GID runner
+        echo useradd runner -u $UID -g runner
+        useradd runner -u $UID -g runner
+        echo bash -c -u runner id
+        bash -c -u runner id
+        echo bash -c -u runner bundle install
+        bash -c -u runner bundle install
+        echo bash -c -u runner bundle exec rails db:migrate
+        bash -c -u runner bundle exec rails db:migrate
 
     - name: Test
       run: bundle exec rails test
