@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build and test
 
 on: push
 
@@ -6,6 +6,7 @@ jobs:
 
   build:
 
+    runs-on: ubuntu-latest
     container: circleci/ruby:2.5.3-node-browsers
 
     steps:
