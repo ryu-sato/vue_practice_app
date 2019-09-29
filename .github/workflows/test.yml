@@ -14,8 +14,6 @@ jobs:
 
     - name: Initialize
       env:
-        USER: circleci
-        HOME: /home/circleci
         RAILS_ENV: test
       run: |
         bundle install
