@@ -29,7 +29,7 @@ jobs:
         # CMD_OPTION: run tmp-migrate -i --generator=run-pod/v1 --rm --image ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289 --overrides={"spec":{"containers":[{"name":"app","image":"${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289","command":["bash"],"args":["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret)"],"envFrom":[{"secretRef":{"name":"vue-practice"}}]}]}}
         CMD_OPTION: run tmp-migrate -i --generator=run-pod/v1 --rm --image ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
       with:
-        args: $CMD_OPTION --overrides='{\"spec\":{\"containers\":[{\"name\":\"app\",\"image\":\"$IMAGE_NAME\",\"command\":[\"bash\"],\"args\":[\"-c\",\"rails db:migrate SECRET_KEY_BASE=$(rails secret)\"],\"envFrom\":[{\"secretRef\":{\"name\":\"vue-practice\"}}]}]}}'
+        args: $CMD_OPTION --overrides='{\"spec\":{\"containers\":[{\"name\":\"app\",\"image\":\"${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289\",\"command\":[\"bash\"],\"args\":[\"-c\",\"rails db:migrate SECRET_KEY_BASE=$(rails secret)\"],\"envFrom\":[{\"secretRef\":{\"name\":\"vue-practice\"}}]}]}}'
 
     - name: deploy to cluster
       uses: steebchen/kubectl@master
