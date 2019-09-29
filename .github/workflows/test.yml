@@ -7,6 +7,7 @@ jobs:
   test:
 
     runs-on: ubuntu-latest
+    container: ruby:2.5.3
 
     steps:
     - uses: actions/checkout@v1
@@ -20,7 +21,7 @@ jobs:
         curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
         sudo apt-get install -y nodejs
         sudo npm install yarn@1.13.0
-        sudo gem install bundler -v 1.17.3
+        gem install bundler -v 1.17.3
         # initialize DB
         bundle install
         bundle exec rails db:migrate
