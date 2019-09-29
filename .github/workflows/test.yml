@@ -15,6 +15,7 @@ jobs:
     - name: Initialize
       env:
         RAILS_ENV: test
+        DISABLE_SPRING: 1
       run: |
         bundle install
         bundle exec rails db:migrate
