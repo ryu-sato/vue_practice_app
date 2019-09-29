@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on: push
+
+jobs:
+
+  build:
+
+    container: circleci/ruby:2.5.3-node-browsers
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Initialize
+      run: |
+        bundle install
+
+    - name: Check by rubocop
+      run: bundle exec rubocop
+
+    - name: Test
+      run: bundle exec rspec spec
