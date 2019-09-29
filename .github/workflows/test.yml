@@ -28,8 +28,8 @@ jobs:
         id
         echo env
         env
-        echo groupadd -g GID runner
-        groupadd -g GID runner
+        echo groupadd -g $GID runner
+        groupadd -g $GID runner
         echo useradd runner -u $UID -g runner
         useradd runner -u $UID -g runner
         echo bash -c -u runner id
