@@ -26,7 +26,7 @@ jobs:
         IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289
         K8S_DEPLOYMENT_NAME: vue-practice
         OVERRIDE_OPTION: "{\"spec\":{\"containers\":[{\"name\":\"app\",\"image\":\"ruby\",\"command\":[\"bash\"],\"args\":[\"-c\",\"rails db:migrate\"]}]}}"
-        CMD_OPTION: run tmp-migrate -i --generator=run-pod/v1 --rm --image ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289 --overrides={"spec":{"containers":[{"name":"app","image":"${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289","command":["bash"],"args":["-c","rails"],"envFrom":[{"secretRef":{"name":"vue-practice"}}]}]}}
+        CMD_OPTION: run tmp-migrate -i --generator=run-pod/v1 --rm --image ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289 --overrides={"spec":{"containers":[{"name":"app","image":"${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:0fd2dd10828c4b9950a83f486d3a833754000289","command":["bash"],"args":["-c","rails db:migrate"],"envFrom":[{"secretRef":{"name":"vue-practice"}}]}]}}
       with:
         args: '$CMD_OPTION'
 
