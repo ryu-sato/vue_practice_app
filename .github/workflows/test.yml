@@ -19,10 +19,8 @@ jobs:
       env:
         RAILS_ENV: test
         DISABLE_SPRING: 1
-        USER: circleci
-        USERNAME: circleci
-        HOME: /home/circleci
       run: |
+        ls -alR
         env
         bundle install
         bundle exec rails db:migrate
