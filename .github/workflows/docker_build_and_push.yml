@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches:
+    - stable
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      env:
+        # [TODO] ${{ github.repository }} から repository 名だけ抽出する
+        IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+      run: docker build . --file Dockerfile --tag $IMAGE_NAME
+
+    - name: Login to Docker hub
+      run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Push the Docker image to Docker hub
+      env:
+        # [TODO] ${{ github.repository }} から repository 名だけ抽出する
+        IMAGE_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/vue_practice_app:${{ github.sha }}
+      run: docker push $IMAGE_NAME
