@@ -13,11 +13,11 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Initialize
+      env:
+        RAILS_ENV: test
       run: |
         bundle install
-
-    - name: Check by rubocop
-      run: bundle exec rubocop
+        bundle exec rails db:migrate
 
     - name: Test
-      run: bundle exec rspec spec
+      run: bundle exec rails test
