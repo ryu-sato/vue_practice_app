@@ -19,7 +19,7 @@ jobs:
       env:
         RAILS_ENV: test
         DISABLE_SPRING: 1
-        USER: $USER
+        USER: 1001
       run: |
         echo ls -alR
         ls -alR
