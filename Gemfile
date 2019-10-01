@@ -96,3 +96,6 @@ gem 'activeadmin'
 
 # Flexible authentication solution for Rails with Warden (https://github.com/plataformatec/devise)
 gem 'devise'
+
+# Facebook OAuth2 Strategy for OmniAuth (https://github.com/mkdynamic/omniauth-facebook)
+gem 'omniauth-facebook'
