@@ -1,0 +1,30 @@
+name: Test
+
+on: push
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+    container: ruby:2.5.3
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Initialize
+      env:
+        RAILS_ENV: test
+        DISABLE_SPRING: 1
+      run: |
+        # install tools
+        curl -sL https://deb.nodesource.com/setup_10.x | bash -
+        apt-get install -y nodejs
+        npm install yarn@1.13.0
+        gem install bundler -v 1.17.3
+        # initialize DB
+        bundle install
+        bundle exec rails db:migrate
+
+    - name: Test
+      run: bundle exec rails test
