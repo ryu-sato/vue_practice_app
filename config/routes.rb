@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  ActiveAdmin.routes(self)
   root to: 'home#index'
+
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth' }
+  ActiveAdmin.routes(self)
 
   namespace :api, {format: 'json'} do
     namespace :v1 do
