@@ -3,13 +3,13 @@
     <% flash.each do |msg_type, message| %>
       <%
         bs_class = case msg_type
-                  when 'notice'
-                    'info'
-                  when 'alert'
-                    'danger'
-                  else
-                    msg_type
-                  end
+                   when 'notice'
+                     'info'
+                   when 'alert'
+                     'danger'
+                   else
+                     msg_type
+                   end
       %>
       <div class="col alert alert-<%= bs_class %>">
         <%= message %>
