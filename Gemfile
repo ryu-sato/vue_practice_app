@@ -99,3 +99,5 @@ gem 'devise'
 
 # Facebook OAuth2 Strategy for OmniAuth (https://github.com/mkdynamic/omniauth-facebook)
 gem 'omniauth-facebook'
+# A Google OAuth2 strategy for OmniAuth 1.x (https://github.com/zquestz/omniauth-google-oauth2)
+gem 'omniauth-google-oauth2'
