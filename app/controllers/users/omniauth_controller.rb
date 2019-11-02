@@ -21,7 +21,8 @@ class Users::OmniauthController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
     else
       set_flash_message(:alert, :failure, kind: oauth_kind, reason: 'User not found and cannot register')
-      session["devise.facebook_data"] = request.env['omniauth.auth']
+      lowercase_oauth_kind = oauth_kind.downcase
+      session["devise.#{lowercase_oauth_kind}_data"] = request.env['omniauth.auth']
       redirect_to new_user_session_path
     end
   end
