@@ -111,6 +111,7 @@ workflows:
 
   cd:
     jobs:
+      - test
       # - docker_build_and_push:
       #     requires:
       #       - test
