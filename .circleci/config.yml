@@ -43,7 +43,7 @@ jobs:
           command: |
             GIT_HASH=$(git rev-parse HEAD)
             echo "export GIT_HASH=${GIT_HASH}" >> $BASH_ENV
-            echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
+            echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app" >> $BASH_ENV
             source $BASH_ENV
 
       - docker-orb/install-docker
@@ -58,6 +58,7 @@ jobs:
 
       - docker-orb/push:
           image: $IMAGE_NAME
+          tag: $GIT_HASH
 
   deploy:
     machine:
