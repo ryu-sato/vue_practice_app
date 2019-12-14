@@ -88,12 +88,12 @@ jobs:
           kubeconfig: KUBECONFIG_STR
 
       - migrate_vue_practice:
-          image_name: ${IMAGE_NAME}
+          image_name: $IMAGE_NAME
 
       - kube-orb/update-container-image:
           namespace: vue-practice
           resource-name: deployment/vue-practice
-          container-image-updates: app=${IMAGE_NAME}
+          container-image-updates: app=$IMAGE_NAME
           record: true
 
       - kube-orb/get-rollout-status:
