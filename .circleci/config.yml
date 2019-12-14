@@ -1,4 +1,9 @@
 version: 2.1
+
+orbs:
+  docker-orb: circleci/docker@0.5.19
+  kube-orb: circleci/kubernetes@0.10.1
+
 jobs:
   test:
     docker:
@@ -26,7 +31,86 @@ jobs:
           name: Test
           command: bundle exec rails test
 
+  docker_build_and_push:
+    machine:
+      - image: ubuntu-1604:201903-01
+
+    steps:
+      - checkout
+
+      - run:
+          name: Initialize
+          command: |
+            GIT_HASH = `git rev-parse HEAD`
+            echo "IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
+            source $BASH_ENV
+
+      - setup_remote_docker
+
+      - docker-orb/build:
+          tag: $IMAGE_NAME
+
+      - docker-orb/publish:
+          docker-username: ${DOCKER_HUB_USERNAME}
+          docker-password: ${DOCKER_HUB_PASSWORD}
+          image: $IMAGE_NAME
+
+  deploy:
+    machine:
+      - image: ubuntu-1604:201903-01
+
+    steps:
+      - checkout
+
+      - run:
+        name: Initialize
+        command: |
+          GIT_HASH = `git rev-parse HEAD`
+          echo "IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
+          source $BASH_ENV
+
+      - kube-orb/install-kubectl
+
+      - kube-orb/kubeconfig
+
+      - run:
+          name: execute DB migration
+          command: >
+            kubectl run tmp-migrate -i --generator=run-pod/v1 --rm
+              --image ${IMAGE_NAME}
+              --overrides='{
+                "spec":{
+                  "containers":[{
+                    "name":"app",
+                    "image":"${IMAGE_NAME}",
+                    "command\":["bash"],
+                    "args":["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret)"],
+                    "envFrom":[{"secretRef":{"name":"vue-practice"}}]
+                  }]
+                }
+              }'
+
+      - kube-orb/update-container-image:
+          namespace: vue-practice
+          resource-name: deployment/vue-practice
+          container-image-updates: app=${IMAGE_NAME}
+          record: true
+
+      - kube-orb/get-rollout-status:
+          namespace: vue-practice
+          resource-name: deployment/vue-practice
+
 workflows:
   ci:
     jobs:
       - test
+
+  cd:
+    jobs:
+      - docker_build_and_push:
+        # filters:
+        #   branches:
+        #     only: stable
+      - deploy:
+        requires:
+          - docker_build_and_push
