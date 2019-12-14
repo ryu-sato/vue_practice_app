@@ -46,7 +46,7 @@ jobs:
             echo "IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
             source $BASH_ENV
 
-      - setup_remote_docker
+      - docker-orb/install-docker
 
       - run:
           name: docker login
