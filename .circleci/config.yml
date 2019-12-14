@@ -75,7 +75,7 @@ jobs:
 
       - kube-orb/install-kubectl
 
-      - kube-orb/kubeconfig
+      - kube-orb/install-kubeconfig
 
       - run:
           name: execute DB migration
