@@ -24,9 +24,7 @@ jobs:
 
       - run:
           name: Test
-          command: |
-            echo hoge
-            bundle exec rails test
+          command: bundle exec rails test
 
 workflows:
   ci:
