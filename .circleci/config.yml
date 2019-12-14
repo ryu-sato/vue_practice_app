@@ -118,6 +118,7 @@ workflows:
       # - docker_build_and_push:
       #     requires:
       #       - test
-      - deploy:
-          requires:
-            - docker_build_and_push
+      # - deploy:
+      #     requires:
+      #       - docker_build_and_push
+      - deploy
