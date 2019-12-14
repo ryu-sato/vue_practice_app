@@ -63,11 +63,11 @@ jobs:
       - checkout
 
       - run:
-        name: Initialize
-        command: |
-          GIT_HASH = $(git rev-parse HEAD)
-          echo "IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
-          source $BASH_ENV
+          name: Initialize
+          command: |
+            GIT_HASH = $(git rev-parse HEAD)
+            echo "IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
+            source $BASH_ENV
 
       - kube-orb/install-kubectl
 
