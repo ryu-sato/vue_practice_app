@@ -65,7 +65,7 @@ jobs:
       - run:
         name: Initialize
         command: |
-          GIT_HASH = `git rev-parse HEAD`
+          GIT_HASH = $(git rev-parse HEAD)
           echo "IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
           source $BASH_ENV
 
