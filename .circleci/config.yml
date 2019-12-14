@@ -46,8 +46,6 @@ jobs:
             echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app" >> $BASH_ENV
             source $BASH_ENV
 
-      - docker-orb/install-docker
-
       - run:
           name: docker login
           command: echo "${DOCKER_HUB_PASSWORD}" | docker login -u ${DOCKER_HUB_USERNAME} --password-stdin
