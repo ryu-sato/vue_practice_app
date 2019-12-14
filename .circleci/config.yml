@@ -83,7 +83,7 @@ jobs:
                   "containers":[{
                     "name":"app",
                     "image":"${IMAGE_NAME}",
-                    "command\":["bash"],
+                    "command":["bash"],
                     "args":["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret)"],
                     "envFrom":[{"secretRef":{"name":"vue-practice"}}]
                   }]
