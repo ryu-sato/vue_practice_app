@@ -112,12 +112,14 @@ workflows:
   cd:
     jobs:
       # - docker_build_and_push:
+      #     requires:
+      #       - test
       #     filters:
       #       branches:
       #         only: stable
-      - docker_build_and_push:
+      - docker_build_and_push
           requires:
-            test
+            - test
       - deploy:
           requires:
             - docker_build_and_push
