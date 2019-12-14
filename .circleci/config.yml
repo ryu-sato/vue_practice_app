@@ -107,10 +107,11 @@ workflows:
 
   cd:
     jobs:
-      - docker_build_and_push:
-        # filters:
-        #   branches:
-        #     only: stable
+      # - docker_build_and_push:
+      #     filters:
+      #       branches:
+      #         only: stable
+      - docker_build_and_push
       - deploy:
-        requires:
-          - docker_build_and_push
+          requires:
+            - docker_build_and_push
