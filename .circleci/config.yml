@@ -80,8 +80,7 @@ jobs:
       - run:
           name: execute DB migration
           command: >
-            kubectl run tmp-migrate -i --generator=run-pod/v1 --rm
-              --image ${IMAGE_NAME}
+            kubectl run tmp-migrate -i --generator=run-pod/v1 --rm --image ${IMAGE_NAME}
               --overrides='{
                 "spec":{
                   "containers":[{
