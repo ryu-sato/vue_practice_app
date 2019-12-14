@@ -74,6 +74,7 @@ jobs:
             source $BASH_ENV
 
       - kube-orb/install-kubectl
+          kubeconfig: KUBECONFIG_STR
 
       - kube-orb/install-kubeconfig
 
