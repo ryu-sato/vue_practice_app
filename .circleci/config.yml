@@ -81,7 +81,7 @@ jobs:
       - run:
           name: execute DB migration
           command: >
-            kubectl run tmp-migrate -i --generator=run-pod/v1 --rm --image ${IMAGE_NAME} --overrides={"spec":{"containers":[{"name":"app","image":"${IMAGE_NAME}","command":["bash"],"args":["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret)"],"envFrom":[{"secretRef":{"name":"vue-practice"}}]}]}}
+            kubectl run tmp-migrate -i --generator=run-pod/v1 --rm --image ${IMAGE_NAME} --overrides=''{"spec":{"containers":[{"name":"app","image":"${IMAGE_NAME}","command":["bash"],"args":["-c","rails db:migrate SECRET_KEY_BASE=$(rails secret)"],"envFrom":[{"secretRef":{"name":"vue-practice"}}]}]}}''
 
       - kube-orb/update-container-image:
           namespace: vue-practice
