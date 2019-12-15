@@ -81,8 +81,7 @@ jobs:
           name: Initialize
           command: |
             GIT_HASH=$(git rev-parse HEAD)
-            # echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
-            echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:stable" >> $BASH_ENV
+            echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
             source $BASH_ENV
 
       - kube-orb/install-kubectl
@@ -110,14 +109,13 @@ workflows:
 
   cd:
     jobs:
-      # - test
-      #     filters:
-      #       branches:
-      #         only: stable
-      # - docker_build_and_push:
-      #     requires:
-      #       - test
-      # - deploy:
-      #     requires:
-      #       - docker_build_and_push
-      - deploy
+      - test
+          filters:
+            branches:
+              only: stable
+      - docker_build_and_push:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - docker_build_and_push
