@@ -109,7 +109,7 @@ workflows:
 
   cd:
     jobs:
-      - test
+      - test:
           filters:
             branches:
               only: stable
