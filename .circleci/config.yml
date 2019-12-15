@@ -1,4 +1,35 @@
 version: 2.1
+
+orbs:
+  docker-orb: circleci/docker@0.5.19
+  kube-orb: circleci/kubernetes@0.10.1
+
+commands:
+  migrate_vue_practice:
+    parameters:
+      image_name:
+        type: string
+    steps:
+      - run: |
+          OVERRIDES="'{ \
+            \"spec\":{ \
+              \"containers\":[{ \
+                \"name\":\"app\", \
+                \"image\":\"<< parameters.image_name >>\", \
+                \"command\":[\"bash\"], \
+                \"args\":[\"-c\",\"rails db:migrate SECRET_KEY_BASE=\$(rails secret)\"], \
+                \"envFrom\":[{ \
+                  \"secretRef\":{ \
+                    \"name\":\"vue-practice\" \
+                  } \
+                }] \
+              }] \
+            } \
+          }'"
+          echo "export OVERRIDES=${OVERRIDES}" >> $BASH_ENV
+          source $BASH_ENV
+          kubectl run tmp-migrate -i --generator=run-pod/v1 --rm -n vue-practice --image << parameters.image_name >> --overrides="${OVERRIDES}"
+
 jobs:
   test:
     docker:
@@ -26,7 +57,79 @@ jobs:
           name: Test
           command: bundle exec rails test
 
+  docker_build_and_push:
+    machine:
+      image: ubuntu-1604:201903-01
+
+    steps:
+      - checkout
+
+      - run:
+          name: Initialize
+          command: |
+            GIT_HASH=$(git rev-parse HEAD)
+            echo "export GIT_HASH=${GIT_HASH}" >> $BASH_ENV
+            echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app" >> $BASH_ENV
+            source $BASH_ENV
+
+      - run:
+          name: docker login
+          command: echo "${DOCKER_HUB_PASSWORD}" | docker login -u ${DOCKER_HUB_USERNAME} --password-stdin
+
+      - docker-orb/build:
+          image: $IMAGE_NAME
+          tag: $GIT_HASH
+
+      - docker-orb/push:
+          image: $IMAGE_NAME
+          tag: $GIT_HASH
+
+  deploy:
+    machine:
+      image: ubuntu-1604:201903-01
+
+    steps:
+      - checkout
+
+      - run:
+          name: Initialize
+          command: |
+            GIT_HASH=$(git rev-parse HEAD)
+            echo "export IMAGE_NAME=${DOCKER_HUB_USERNAME}/vue_practice_app:${GIT_HASH}" >> $BASH_ENV
+            source $BASH_ENV
+
+      - kube-orb/install-kubectl
+
+      - kube-orb/install-kubeconfig:
+          kubeconfig: KUBECONFIG_STR
+
+      - migrate_vue_practice:
+          image_name: $IMAGE_NAME
+
+      - kube-orb/update-container-image:
+          namespace: vue-practice
+          resource-name: deployment/vue-practice
+          container-image-updates: app=$IMAGE_NAME
+          record: true
+
+      - kube-orb/get-rollout-status:
+          namespace: vue-practice
+          resource-name: deployment/vue-practice
+
 workflows:
   ci:
     jobs:
       - test
+
+  cd:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: stable
+      - docker_build_and_push:
+          requires:
+            - test
+      - deploy:
+          requires:
+            - docker_build_and_push
