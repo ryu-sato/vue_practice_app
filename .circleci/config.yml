@@ -123,11 +123,10 @@ workflows:
 
   cd:
     jobs:
-      # - test:
-      #     filters:
-      #       branches:
-      #         only: stable
-      - test
+      - test:
+          filters:
+            branches:
+              only: stable
       - docker_build_and_push:
           requires:
             - test
