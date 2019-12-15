@@ -125,6 +125,7 @@ workflows:
 #          filters:
 #            branches:
 #              only: stable
+      - test
       - docker_build_and_push:
           requires:
             - test
