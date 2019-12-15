@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/ryu-sato/vue_practice_app/tree/master.svg?style=svg)](https://circleci.com/gh/ryu-sato/vue_practice_app/tree/master)
+
 # Vue Practice Application 概要
 
 Vue 実戦用の Application。
