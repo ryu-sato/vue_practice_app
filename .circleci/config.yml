@@ -14,7 +14,7 @@ commands:
           OVERRIDES="'{\"spec\":{\"containers\":[{\"name\":\"app\",\"image\":\"<< parameters.image_name >>\",\"command\":[\"bash\"],\"args\":[\"-c\",\"rails db:migrate SECRET_KEY_BASE=\$(rails secret)\"],\"envFrom\":[{\"secretRef\":{\"name\":\"vue-practice\"}}]}]}}'"
           echo "export OVERRIDES=${OVERRIDES}" >> $BASH_ENV
           source $BASH_ENV
-          kubectl run tmp-migrate -i --generator=run-pod/v1 --rm --image << parameters.image_name >> --overrides="${OVERRIDES}"
+          kubectl run tmp-migrate -i --generator=run-pod/v1 --rm -n vue-practice --image << parameters.image_name >> --overrides="${OVERRIDES}"
 
 jobs:
   test:
